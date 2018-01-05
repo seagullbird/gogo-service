@@ -58,7 +58,7 @@ deploy:
     - internal/docker-push:
       username: $DOCKER_USERNAME
       password: $DOCKER_PASSWORD
-      cmd: /pipeline/output/gogo-service
+      cmd: /pipeline/source/gogo-service
       port: $PORT
       tag: latest
       repository: seagullbird/gogo-service
