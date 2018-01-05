@@ -58,17 +58,17 @@ deploy:
     - internal/docker-push:
       username: $DOCKER_USERNAME
       password: $DOCKER_PASSWORD
-      cmd: /pipeline/source/hello
-      port: "3000"
+      cmd: /pipeline/output/gogo-service
+      port: $PORT
       tag: latest
       repository: seagullbird/gogo-service
       registry: https://registry.hub.docker.com
 
-    - cng/cf-deploy:
-      api: $API
-      user: $USER
-      password: $PASSWORD
-      org: $ORG
-      space: $SPACE
-      appname: gogo-service
-      docker-image: seagullbird/gogo-service
+#    - cng/cf-deploy:
+#      api: $API
+#      user: $USER
+#      password: $PASSWORD
+#      org: $ORG
+#      space: $SPACE
+#      appname: gogo-service
+#      docker-image: seagullbird/gogo-service
