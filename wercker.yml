@@ -9,10 +9,14 @@ dev:
       package-dir: github.com/seagullbird/gogo-service
 
     - script:
-      name: dep ensure
+      name: env
       code: |
+        env
         go version
-        dep ensure
+
+    - script:
+      name: dep ensure
+      code: dep ensure
 
     - internal/watch:
       code: go run main.go
@@ -36,8 +40,7 @@ build:
     # Build the project
     - script:
       name: go build
-      code: |
-        go build
+      code: go build
 
     # Test the project
     - script:
@@ -52,7 +55,7 @@ build:
 
 deploy:
   steps:
-    - internal/watch:
+    - internal/docker-push:
       username: $DOCKER_USERNAME
       password: $DOCKER_PASSWORD
       cmd: /pipeline/source/hello
