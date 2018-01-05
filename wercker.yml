@@ -1,0 +1,71 @@
+box:
+  id: seagullbird/golang-dep
+  ports:
+    - "3000"
+
+dev:
+  steps:
+    - setup-go-workspace:
+      package-dir: github.com/seagullbird/gogo-service
+
+    - script:
+      name: dep ensure
+      code: |
+        go version
+        dep ensure
+
+    - internal/watch:
+      code: go run main.go
+      reload: true
+
+build:
+  steps:
+    - setup-go-workspace:
+      package-dir: github.com/seagullbird/gogo-service
+
+    - script:
+      name: env
+      code: env
+
+    - script:
+      name: dep ensure
+      code: |
+        go version
+        dep ensure
+
+    # Build the project
+    - script:
+      name: go build
+      code: |
+        go build
+
+    # Test the project
+    - script:
+      name: go test
+      code: |
+        go test -v ./...
+
+    - script:
+      name: copy files to wercker output
+      code: |
+        cp -R ./ ${WERCKER_OUTPUT_DIR}
+
+deploy:
+  steps:
+    - internal/watch:
+      username: $DOCKER_USERNAME
+      password: $DOCKER_PASSWORD
+      cmd: /pipeline/source/hello
+      port: "3000"
+      tag: latest
+      repository: seagullbird/gogo-service
+      registry: https://registry.hub.docker.com
+
+    - cng/cf-deploy:
+      api: $API
+      user: $USER
+      password: $PASSWORD
+      org: $ORG
+      space: $SPACE
+      appname: gogo-service
+      docker-image: seagullbird/gogo-service
