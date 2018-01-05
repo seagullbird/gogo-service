@@ -62,7 +62,6 @@ deploy:
       port: $PORT
       tag: latest
       repository: seagullbird/gogo-service
-      registry: https://registry.hub.docker.com
 
 #    - cng/cf-deploy:
 #      api: $API
