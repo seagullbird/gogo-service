@@ -16,12 +16,12 @@ func testHandler(formatter *render.Render) http.HandlerFunc {
 
 func createMatchHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		guid := uuid.NewV4()
-		w.Header().Add("Location", "/matches/" + guid.String())
+		guid := uuid.NewV4().String()
+		w.Header().Add("Location", "/matches/" + guid)
 		formatter.JSON(w,
 			http.StatusCreated,
-			struct {
-				Test string
-			}{"This is a test"})
+			&newMatchResponse{
+				Id: guid,
+			})
 	}
 }

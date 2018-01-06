@@ -5,10 +5,10 @@ import (
 	"github.com/unrolled/render"
 	"net/http"
 	"bytes"
-	"fmt"
 	"io/ioutil"
 	"net/http/httptest"
 	"strings"
+	"encoding/json"
 )
 
 const (
@@ -33,11 +33,11 @@ func TestCreateMatch(t *testing.T) {
 
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Println("Errored when sending request to the server: %v", err)
+		t.Errorf("Error in POST to createMatchHandler: %v", err)
 		return
 	}
 	defer resp.Body.Close()
-	_, err = ioutil.ReadAll(resp.Body)
+	payload, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		t.Errorf("Errored reading response body: %v", err)
 	}
@@ -57,5 +57,14 @@ func TestCreateMatch(t *testing.T) {
 		if len(loc[0]) != len(fakeMatchLocationResult) {
 			t.Errorf("Location value does not contain guid of new match: %s", loc[0])
 		}
+	}
+
+	var matchResponse newMatchResponse
+	err = json.Unmarshal(payload, &matchResponse)
+	if err != nil {
+		t.Errorf("Could not unmarshal payload into newMatchResponse object")
+	}
+	if matchResponse.Id == "" || !strings.Contains(loc[0], matchResponse.Id) {
+		t.Error("matchResponse.Id does not match Location header")
 	}
 }
