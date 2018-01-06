@@ -4,7 +4,6 @@ import (
 	"github.com/codegangsta/negroni"
 	"github.com/unrolled/render"
 	"github.com/gorilla/mux"
-	"net/http"
 )
 
 func NewServer() *negroni.Negroni {
@@ -24,12 +23,4 @@ func NewServer() *negroni.Negroni {
 
 func initRoutes(mx *mux.Router, formatter *render.Render) {
 	mx.HandleFunc("/test", testHandler(formatter)).Methods("GET")
-}
-
-func testHandler(formatter *render.Render) http.HandlerFunc {
-	return func(w http.ResponseWriter, req *http.Request) {
-		formatter.JSON(w, http.StatusOK, struct {
-			Test string
-		}{"This is a test"})
-	}
 }

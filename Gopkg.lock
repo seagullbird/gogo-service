@@ -20,6 +20,12 @@
   version = "v1.6.0"
 
 [[projects]]
+  name = "github.com/satori/go.uuid"
+  packages = ["."]
+  revision = "879c5887cd475cd7864858769793b2ceb0d44feb"
+  version = "v1.1.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/unrolled/render"
   packages = ["."]
@@ -28,6 +34,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "e1ac750a1bd391496b18a9c12be532903bbed5f9cc3746207ad70e8565165f6b"
+  inputs-digest = "a30a5dfc74ea8f221e51860bbb4cfb787e0fa9e8eae20393a40b5ee2aec54537"
   solver-name = "gps-cdcl"
   solver-version = 1
