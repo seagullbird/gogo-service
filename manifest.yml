@@ -1,0 +1,11 @@
+---
+applications:
+- path: .
+  name: gogo-service
+  memory: 512M
+  instances: 1
+  disk_quota: 1024M
+  command: gogo-service
+  random-route: true
+  env:
+      GOPACKAGENAME: github.com/seagullbird/gogo-service
