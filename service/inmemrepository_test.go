@@ -18,6 +18,14 @@ func TestAddMatchShowsUpInRepository(t *testing.T) {
 	if len(matches) != 1 {
 		t.Errorf("Expected to have 1 match in the repository, got %d", len(matches))
 	}
+
+	if match.PlayerBlack != "playerBlack" {
+		t.Errorf("Player 1's name should have been playerBlack, got %s", match.PlayerBlack)
+	}
+
+	if match.PlayerWhite != "playerWhite" {
+		t.Errorf("Player 2's name should have been playerWhite, got %s", match.PlayerWhite)
+	}
 }
 
 func TestNewRepositoryIsEmpty(t *testing.T) {

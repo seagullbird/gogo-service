@@ -30,6 +30,8 @@ func createMatchHandler(formatter *render.Render, repo *inMemoryMatchRepository)
 			&newMatchResponse{
 				Id: match.ID,
 				GridSize: match.GridSize,
+				PlayerWhite: match.PlayerWhite,
+				PlayerBlack: match.PlayerBlack,
 			})
 	}
 }

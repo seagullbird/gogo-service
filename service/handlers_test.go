@@ -27,7 +27,7 @@ func TestCreateMatch(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(createMatchHandler(formatter, repo)))
 	defer server.Close()
 
-	body := []byte("{\n  \"gridsize\": 19,\n  \"players\": [\n    {\n      \"color\": \"white\",\n      \"name\": \"bob\"\n    },\n    {\n      \"color\": \"black\",\n      \"name\": \"alfred\"\n    }\n  ]\n}")
+	body := []byte("{\n  \"gridsize\": 19,\n  \"playerWhite\": \"bob\",\n  \"playerBlack\": \"alfred\"\n}")
 
 	req, err := http.NewRequest("POST", server.URL, bytes.NewBuffer(body))
 	req.Header.Add("Content-Type", "application/json")
@@ -77,5 +77,21 @@ func TestCreateMatch(t *testing.T) {
 	var match = matches[0]
 	if match.GridSize != matchResponse.GridSize {
 		t.Errorf("Expected repo match and HTTP response gridsize to match. Got %d and %d", match.GridSize, matchResponse.GridSize)
+	}
+
+	if match.PlayerWhite != "bob" {
+		t.Errorf("Repository match, white player should be bob, got %s", match.PlayerWhite)
+	}
+
+	if match.PlayerBlack != "alfred" {
+		t.Errorf("Repository match, white player should be alfred, got %s", match.PlayerBlack)
+	}
+
+	if matchResponse.PlayerWhite != "bob" {
+		t.Errorf("Response, Player White's name should have been bob, got %s", match.PlayerBlack)
+	}
+
+	if matchResponse.PlayerBlack != "alfred" {
+		t.Errorf("Response, Player Black's name should have been alfred, got %s", match.PlayerWhite)
 	}
 }
