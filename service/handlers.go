@@ -20,7 +20,16 @@ func createMatchHandler(formatter *render.Render, repo *inMemoryMatchRepository)
 	return func(w http.ResponseWriter, req *http.Request) {
 		req_payload, _ := ioutil.ReadAll(req.Body)
 		var newMatchRequest newMatchRequest
-		json.Unmarshal(req_payload, &newMatchRequest)
+		err := json.Unmarshal(req_payload, &newMatchRequest)
+		if err != nil {
+			formatter.Text(w, http.StatusBadRequest, "Failed to parse create match request")
+			return
+		}
+
+		if !newMatchRequest.isValid() {
+			formatter.Text(w, http.StatusBadRequest, "Invalid new match request")
+			return
+		}
 
 		match := gogo.NewMatch(newMatchRequest.GridSize, newMatchRequest.PlayerBlack, newMatchRequest.PlayerWhite)
 		repo.addMatch(match)

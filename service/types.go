@@ -13,3 +13,17 @@ type newMatchRequest struct {
 	PlayerWhite string 		`json:"playerWhite"`
 	PlayerBlack string      `json:"playerBlack"`
 }
+
+func (request newMatchRequest) isValid() (valid bool) {
+	valid = true
+	if request.GridSize != 19 {
+		valid = false
+	}
+	if request.PlayerWhite == "" {
+		valid = false
+	}
+	if request.PlayerBlack == "" {
+		valid = false
+	}
+	return valid
+}
