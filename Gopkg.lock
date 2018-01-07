@@ -2,6 +2,12 @@
 
 
 [[projects]]
+  branch = "master"
+  name = "github.com/cloudnativego/gogo-engine"
+  packages = ["."]
+  revision = "256cb157fb61886eada3c2ec613fbb4428f5ca3f"
+
+[[projects]]
   name = "github.com/codegangsta/negroni"
   packages = ["."]
   revision = "5dbbc83f748fc3ad38585842b0aedab546d0ea1e"
@@ -20,6 +26,12 @@
   version = "v1.6.0"
 
 [[projects]]
+  name = "github.com/pborman/uuid"
+  packages = ["."]
+  revision = "e790cca94e6cc75c7064b1332e63811d4aae1a53"
+  version = "v1.1"
+
+[[projects]]
   name = "github.com/satori/go.uuid"
   packages = ["."]
   revision = "879c5887cd475cd7864858769793b2ceb0d44feb"
@@ -34,6 +46,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "a30a5dfc74ea8f221e51860bbb4cfb787e0fa9e8eae20393a40b5ee2aec54537"
+  inputs-digest = "a9932d814d70d3a81626c201a092d4dcb094c0708ea7027c168cbcce0fe3789a"
   solver-name = "gps-cdcl"
   solver-version = 1
