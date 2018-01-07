@@ -73,4 +73,9 @@ func TestCreateMatch(t *testing.T) {
 	if len(matches) != 1 {
 		t.Errorf("Expected a match repo of 1 match, got size %d", len(matches))
 	}
+
+	var match = matches[0]
+	if match.GridSize != matchResponse.GridSize {
+		t.Errorf("Expected repo match and HTTP response gridsize to match. Got %d and %d", match.GridSize, matchResponse.GridSize)
+	}
 }

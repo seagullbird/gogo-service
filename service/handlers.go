@@ -3,8 +3,9 @@ package service
 import (
 	"github.com/unrolled/render"
 	"net/http"
-	"github.com/satori/go.uuid"
 	"github.com/cloudnativego/gogo-engine"
+	"encoding/json"
+	"io/ioutil"
 )
 
 func testHandler(formatter *render.Render) http.HandlerFunc {
@@ -17,14 +18,18 @@ func testHandler(formatter *render.Render) http.HandlerFunc {
 
 func createMatchHandler(formatter *render.Render, repo *inMemoryMatchRepository) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		match := gogo.NewMatch(19, "playerBlack", "playerWhite")
+		req_payload, _ := ioutil.ReadAll(req.Body)
+		var newMatchRequest newMatchRequest
+		json.Unmarshal(req_payload, &newMatchRequest)
+
+		match := gogo.NewMatch(newMatchRequest.GridSize, newMatchRequest.PlayerBlack, newMatchRequest.PlayerWhite)
 		repo.addMatch(match)
-		guid := uuid.NewV4().String()
-		w.Header().Add("Location", "/matches/" + guid)
+		w.Header().Add("Location", "/matches/" + match.ID)
 		formatter.JSON(w,
 			http.StatusCreated,
 			&newMatchResponse{
-				Id: guid,
+				Id: match.ID,
+				GridSize: match.GridSize,
 			})
 	}
 }
