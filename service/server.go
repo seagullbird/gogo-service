@@ -23,4 +23,6 @@ func NewServer() *negroni.Negroni {
 
 func initRoutes(mx *mux.Router, formatter *render.Render) {
 	mx.HandleFunc("/test", testHandler(formatter)).Methods("GET")
+	repo := &inMemoryMatchRepository{}
+	mx.HandleFunc("/matches", createMatchHandler(formatter, repo)).Methods("POST")
 }
